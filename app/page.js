@@ -1,95 +1,95 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import Hero from '../components/Hero';
+import Featured from '../components/Featured';
+import OurProcess from '../components/OurProcess';
+import Testimonials from '../components/Testimonials';
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <>
+      <Navbar />
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      {/* Home Section */}
+      <section id="home">
+        <Hero />
+        <Featured />
+      </section>
+
+      {/* About Section */}
+<section id="about" className="min-h-screen bg-[#f9f4ef] px-6 py-16">
+  <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+    {/* Image or Illustration */}
+    <div>
+      <img
+        src="/images/about-coffee.jpg"
+        alt="Our Coffee Story"
+        className="rounded-xl shadow-lg"
+      />
     </div>
+
+    {/* Text Content */}
+    <div className="text-center md:text-left">
+      <h2 className="text-4xl font-bold mb-6 text-[#5c3d2e]">About Starbrew</h2>
+      <p className="text-lg text-gray-700 mb-4">
+        Welcome to <span className="font-semibold">Starbrew</span>, where every sip is a journey.
+        Our story began with a love for artisan coffee and a dream to create a cozy escape in the chaos of life.
+      </p>
+      <p className="text-md text-gray-600">
+        We believe in sourcing responsibly, brewing passionately, and serving joy — one handcrafted cup at a time.
+        Whether you're grabbing a morning pick-me-up or staying for a peaceful chat, Starbrew is your home away from home.
+      </p>
+    </div>
+  </div>
+</section>
+
+      {/* Process Section */}
+      <section>
+        <OurProcess />
+      </section>
+
+      {/* Testimonials Section */}
+      <section>
+        <Testimonials />
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="min-h-screen bg-white px-6 py-16">
+        <div className="max-w-xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-4">Contact Us</h2>
+          <p className="text-lg mb-6">
+            We'd love to hear from you! Fill out the form below and we'll get back to you soon.
+          </p>
+          <form className="space-y-4 text-left">
+            <input
+              type="text"
+              placeholder="Your Name"
+              className="w-full p-3 border border-gray-300 rounded"
+              required
+            />
+            <input
+              type="email"
+              placeholder="Your Email"
+              className="w-full p-3 border border-gray-300 rounded"
+              required
+            />
+            <textarea
+              placeholder="Your Message"
+              className="w-full p-3 border border-gray-300 rounded"
+              rows="5"
+              required
+            />
+            <button
+              type="submit"
+              className="bg-[#d4a373] text-white px-6 py-3 rounded hover:bg-[#b88752]"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <Footer />
+    </>
   );
 }
