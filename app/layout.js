@@ -1,15 +1,19 @@
 import './globals.css';
-import { CartProvider } from './context/CartContext';  // Adjust path if needed
+import Script from 'next/script';
+import { CartProvider } from './context/CartContext'; // ✅ fixed path
 
 export const metadata = {
   title: 'Starbrew',
-  description: 'Your perfect cup of coffee, brewed with love.',
+  description: 'Your perfect cup of coffee awaits.',
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-white text-gray-900">
+      <head>
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" />
+      </head>
+      <body className="bg-white text-gray-800">
         <CartProvider>
           {children}
         </CartProvider>

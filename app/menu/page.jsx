@@ -68,7 +68,7 @@ export default function MenuPage() {
                     <p className="text-gray-500 flex-grow">{item.desc}</p>
                     <p className="text-[#a47148] font-bold mt-2">₹{item.price}</p>
                     <button
-                      onClick={() => addToCart({ ...item, price: `₹${item.price}` })}
+                      onClick={() => addToCart(item)}
                       className="mt-4 bg-[#d4a373] text-white py-2 rounded hover:bg-[#b2854a] transition"
                     >
                       Add to Cart
