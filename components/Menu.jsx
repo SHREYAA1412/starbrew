@@ -5,7 +5,7 @@ const Menu = () => {
   return (
     <div>
       <h2>Our Menu</h2>
-      <img src="/images/menu/brownine.jpg" alt="Brownine" />
+      <img src="/images/menu/browine.jpg" alt="Browine" />
       <img src="/images/menu/cappuccino.jpg" alt="Cappuccino" />
       {/* Add more menu items here similarly */}
     </div>
