@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import Image from 'next/image';
 
 const menuItems = [
   { src: '/images/menu/Brownie.jpg', alt: 'Brownie' },
@@ -25,7 +28,13 @@ export default function Home() {
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
         {menuItems.map((item) => (
           <div key={item.alt} style={{ textAlign: 'center' }}>
-            <img src={item.src} alt={item.alt} style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '10px' }} />
+            <Image
+              src={item.src}
+              alt={item.alt}
+              width={150}
+              height={150}
+              style={{ objectFit: 'cover', borderRadius: '10px' }}
+            />
             <p>{item.alt}</p>
           </div>
         ))}

@@ -1,7 +1,8 @@
+'use client'; // if you use app directory, else remove this if pages directory
+
 import { useState } from "react";
 
 export default function PaymentPage() {
-  // Replace this mock cart with your actual cart state if you have one
   const mockCart = [
     { id: 1, name: "Cappuccino", qty: 1, price: 150 },
     { id: 2, name: "Latte", qty: 1, price: 160 },
@@ -16,13 +17,10 @@ export default function PaymentPage() {
   const [loading, setLoading] = useState(false);
 
   const handlePayment = async () => {
-    // require a method
     if (!paymentMethod) {
       alert("Please select a payment method");
       return;
     }
-
-    // simple validation for method-specific fields (dummy)
     if (paymentMethod === "UPI" && !upiId.trim()) {
       alert("Please enter your UPI ID");
       return;
@@ -30,19 +28,44 @@ export default function PaymentPage() {
     if (paymentMethod === "Credit Card" && cardNumber.replace(/\s/g, "").length < 12) {
       alert("Please enter a valid dummy card number");
       return;
-    }
+    }SSSSSSSS
 
     setLoading(true);
-    // Simulate payment processing
-    await new Promise((res) => setTimeout(res, 1000));
-    setLoading(false);
-    setPaymentCompleted(true);
+
+    try {
+      const res = await fetch("/api/payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cart: mockCart,
+          paymentMethod,
+          upiId,
+          cardNumber,
+          total,
+        }),
+      });
+
+      if (!res.ok) throw new Error(`Payment failed with status ${res.status}`);
+
+      const data = await res.json();
+
+      if (data.success) {
+        setPaymentCompleted(true);
+      } else {
+        alert("Payment failed");
+      }
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-[#f9f7f1] px-6 py-10">
       <div className="max-w-3xl mx-auto">
-        {/* Cart summary */}
         <h1 className="text-3xl font-bold text-[#222] mb-6">Your Cart</h1>
         <div className="space-y-6 mb-6">
           {mockCart.map((item) => (
@@ -54,7 +77,6 @@ export default function PaymentPage() {
                   </div>
                   <div className="text-sm text-[#555]">Price: ₹{item.price} each</div>
                 </div>
-                {/* You can add Remove button here */}
               </div>
             </div>
           ))}
@@ -63,7 +85,6 @@ export default function PaymentPage() {
         <div className="mb-8">
           <div className="text-2xl font-bold text-[#222] mb-4">Total: ₹{total}</div>
 
-          {/* Payment method selection - always visible */}
           <div className="bg-white p-6 rounded-lg shadow-sm border border-[#eee]">
             <h3 className="text-lg font-semibold text-[#5b4a2e] mb-4">Select payment method</h3>
 
@@ -105,7 +126,6 @@ export default function PaymentPage() {
               </label>
             </div>
 
-            {/* Show method-specific inputs (dummy) */}
             <div className="mt-4">
               {paymentMethod === "UPI" && (
                 <div className="space-y-2">
@@ -144,7 +164,6 @@ export default function PaymentPage() {
               )}
             </div>
 
-            {/* Pay button */}
             <div className="mt-6 flex items-center gap-4">
               <button
                 onClick={handlePayment}
@@ -156,7 +175,6 @@ export default function PaymentPage() {
 
               <button
                 onClick={() => {
-                  // Clear (example)
                   setPaymentMethod("");
                   setUpiId("");
                   setCardNumber("");
@@ -170,20 +188,26 @@ export default function PaymentPage() {
           </div>
         </div>
 
-        {/* Success message shown below but payment options remain visible above */}
         {paymentCompleted && (
           <div className="mt-6 p-6 rounded-lg border border-[#a47149] bg-[#f0e7d9]">
             <div className="flex items-start gap-4">
               <div className="w-16 h-16 rounded-full flex items-center justify-center bg-white">
-                {/* simple check icon */}
                 <svg className="w-8 h-8 text-[#a47149]" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 13l4 4L19 7" stroke="#a47149" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path
+                    d="M5 13l4 4L19 7"
+                    stroke="#a47149"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </div>
               <div>
                 <h2 className="text-2xl font-semibold text-[#5b4a2e]">Payment Successful!</h2>
                 <p className="text-[#6b5e49] mt-1">Thank you for your order! Your coffee will be brewed soon ☕️</p>
-                <p className="text-sm text-[#6b5e49] mt-2">Payment method: <strong>{paymentMethod}</strong></p>
+                <p className="text-sm text-[#6b5e49] mt-2">
+                  Payment method: <strong>{paymentMethod}</strong>
+                </p>
               </div>
             </div>
           </div>

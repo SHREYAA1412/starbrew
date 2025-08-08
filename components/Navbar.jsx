@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useCart } from '../app/context/CartContext';  // Adjust path if needed
+import { useCart } from '../app/context/CartContext';
 
 const Navbar = () => {
   const router = useRouter();
@@ -11,7 +11,8 @@ const Navbar = () => {
   const { cartItems } = useCart();
   const totalQty = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
-  // Smooth scroll handler for anchor links on the homepage
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const handleScroll = (e, sectionId) => {
     e.preventDefault();
 
@@ -30,13 +31,30 @@ const Navbar = () => {
         section.scrollIntoView({ behavior: 'smooth' });
       }
     }
+
+    setMenuOpen(false); // close menu on click
   };
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold text-[#4a3f3a]">Starbrew</h1>
-        <ul className="hidden md:flex gap-8 font-medium items-center">
+
+        {/* Hamburger button for mobile */}
+        <button
+          className="md:hidden text-3xl"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          ☰
+        </button>
+
+        {/* Navigation links */}
+        <ul
+          className={`${
+            menuOpen ? 'flex' : 'hidden'
+          } flex-col md:flex md:flex-row gap-4 md:gap-8 font-medium items-center`}
+        >
           <li>
             <a href="#hero" onClick={(e) => handleScroll(e, 'hero')} className="hover:text-[#d4a373]">
               Home
@@ -60,7 +78,10 @@ const Navbar = () => {
           <li>
             <button
               aria-label="Go to cart"
-              onClick={() => router.push('/cart')}
+              onClick={() => {
+                setMenuOpen(false);
+                router.push('/cart');
+              }}
               className="relative text-2xl hover:text-[#d4a373]"
             >
               🛒
@@ -73,7 +94,11 @@ const Navbar = () => {
           </li>
           {totalQty > 0 && (
             <li>
-              <Link href="/checkout" className="font-semibold text-[#d4a373] hover:underline">
+              <Link
+                href="/checkout"
+                className="font-semibold text-[#d4a373] hover:underline"
+                onClick={() => setMenuOpen(false)}
+              >
                 Checkout
               </Link>
             </li>
